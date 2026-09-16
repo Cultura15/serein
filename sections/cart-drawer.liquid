@@ -1,0 +1,84 @@
+{{ 'cart-drawer.css' | asset_url | stylesheet_tag }}
+
+<div class="fish-cart-drawer" id="fish-cart-drawer" aria-hidden="true">
+  <div class="fish-cart-drawer__overlay" data-fish-cart-close></div>
+
+  <div class="fish-cart-drawer__panel" role="dialog" aria-label="Cart">
+    <div class="fish-cart-drawer__header">
+      <h2 class="fish-cart-drawer__title">Cart <span class="fish-cart-drawer__count" data-fish-cart-count>{{ cart.item_count }} item{% if cart.item_count != 1 %}s{% endif %}</span></h2>
+      <button type="button" class="fish-cart-drawer__close" data-fish-cart-close aria-label="Close cart">Close</button>
+    </div>
+
+    {% if section.settings.free_shipping_threshold > 0 %}
+      <div class="fish-cart-drawer__shipping" data-fish-cart-shipping>
+        <p class="fish-cart-drawer__shipping-text"></p>
+        <div class="fish-cart-drawer__shipping-bar">
+          <div class="fish-cart-drawer__shipping-fill" data-fish-cart-shipping-fill></div>
+        </div>
+      </div>
+    {% endif %}
+
+    <div class="fish-cart-drawer__items" data-fish-cart-items>
+      {% if cart.item_count == 0 %}
+        <p class="fish-cart-drawer__empty">Your cart is empty.</p>
+      {% else %}
+        {% for item in cart.items %}
+          <div class="fish-cart-drawer__item" data-fish-cart-line="{{ forloop.index }}">
+            <a href="{{ item.url }}" class="fish-cart-drawer__item-image-wrap">
+              {% if item.image %}
+                <img src="{{ item.image | image_url: width: 200 }}" alt="{{ item.title }}" class="fish-cart-drawer__item-image">
+              {% endif %}
+            </a>
+
+            <div class="fish-cart-drawer__item-info">
+              <a href="{{ item.url }}" class="fish-cart-drawer__item-title">{{ item.product.title }}</a>
+              {% unless item.variant.title == 'Default Title' %}
+                <p class="fish-cart-drawer__item-variant">{{ item.variant.title }}</p>
+              {% endunless %}
+
+              <div class="fish-cart-drawer__item-row">
+                <div class="fish-cart-drawer__qty">
+                  <button type="button" class="fish-cart-drawer__qty-btn" data-fish-cart-minus data-line="{{ forloop.index }}" aria-label="Decrease quantity">−</button>
+                  <span class="fish-cart-drawer__qty-value" data-fish-cart-qty>{{ item.quantity }}</span>
+                  <button type="button" class="fish-cart-drawer__qty-btn" data-fish-cart-plus data-line="{{ forloop.index }}" aria-label="Increase quantity">+</button>
+                </div>
+                <span class="fish-cart-drawer__item-price">{{ item.final_line_price | money }}</span>
+              </div>
+            </div>
+
+            <button type="button" class="fish-cart-drawer__remove" data-fish-cart-remove data-line="{{ forloop.index }}" aria-label="Remove item">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"/></svg>
+            </button>
+          </div>
+        {% endfor %}
+      {% endif %}
+    </div>
+
+    {% if cart.item_count > 0 %}
+      <div class="fish-cart-drawer__footer">
+        <div class="fish-cart-drawer__subtotal-row">
+          <span>Subtotal</span>
+          <span data-fish-cart-subtotal>{{ cart.total_price | money }}</span>
+        </div>
+        <p class="fish-cart-drawer__subtotal-note">Tax included. Shipping calculated at checkout.</p>
+        <a href="{{ routes.cart_url }}" class="fish-cart-drawer__checkout-btn">Checkout</a>
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+<script src="{{ 'cart-drawer.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "Cart Drawer",
+  "settings": [
+    {
+      "type": "number",
+      "id": "free_shipping_threshold",
+      "label": "Free shipping threshold (in cents)",
+      "default": 5000
+    }
+  ]
+}
+{% endschema %}

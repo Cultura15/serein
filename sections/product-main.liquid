@@ -3,31 +3,60 @@
 {% assign current_variant = product.selected_or_first_available_variant %}
 
 <section class="fish-product">
+
   <div class="fish-product__container">
 
     <!-- Breadcrumb -->
     <nav class="fish-product__breadcrumb" aria-label="breadcrumb">
-      <a href="{{ routes.root_url }}" class="fish-product__breadcrumb-home" aria-label="Home">
-        <svg viewBox="0 0 24 24" fill="none"><path d="M3 11l9-8 9 8M5 10v10h14V10"/></svg>
+
+      <a
+        href="{{ routes.root_url }}"
+        class="fish-product__breadcrumb-home"
+        aria-label="Home"
+      >
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M3 11l9-8 9 8M5 10v10h14V10"/>
+        </svg>
       </a>
+
       {% if collection %}
         <span class="fish-product__breadcrumb-sep">/</span>
-        <a href="{{ collection.url }}">{{ collection.title | upcase }}</a>
+
+        <a href="{{ collection.url }}">
+          {{ collection.title | upcase }}
+        </a>
       {% endif %}
+
       <span class="fish-product__breadcrumb-sep">/</span>
-      <span class="fish-product__breadcrumb-current">{{ product.title | upcase }}</span>
+
+      <span class="fish-product__breadcrumb-current">
+        {{ product.title | upcase }}
+      </span>
+
     </nav>
+
 
     <div class="fish-product__grid">
 
       <!-- Gallery -->
       <div class="fish-product__gallery">
+
         <div class="fish-product__main-image-wrap">
-          <button type="button" class="fish-product__arrow fish-product__arrow--prev" data-fish-gallery-prev aria-label="Previous image">
-            <svg viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6"/></svg>
+
+          <button
+            type="button"
+            class="fish-product__arrow fish-product__arrow--prev"
+            data-fish-gallery-prev
+            aria-label="Previous image"
+          >
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M15 6l-6 6 6 6"/>
+            </svg>
           </button>
 
+
           {% for image in product.images %}
+
             <img
               src="{{ image | image_url: width: 900 }}"
               alt="{{ image.alt | default: product.title }}"
@@ -38,117 +67,276 @@
               width="{{ image.width }}"
               height="{{ image.height }}"
             >
+
           {% else %}
+
             <div class="fish-product__main-image fish-product__main-image--active fish-product__main-image--placeholder">
               {{ 'image' | placeholder_svg_tag: 'fish-product__placeholder-svg' }}
             </div>
+
           {% endfor %}
 
-          <button type="button" class="fish-product__arrow fish-product__arrow--next" data-fish-gallery-next aria-label="Next image">
-            <svg viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6"/></svg>
+
+          <button
+            type="button"
+            class="fish-product__arrow fish-product__arrow--next"
+            data-fish-gallery-next
+            aria-label="Next image"
+          >
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M9 6l6 6-6 6"/>
+            </svg>
           </button>
+
         </div>
 
+
         {% if product.images.size > 1 %}
+
           <div class="fish-product__thumbs">
+
             {% for image in product.images %}
+
               <button
                 type="button"
                 class="fish-product__thumb {% if forloop.first %}fish-product__thumb--active{% endif %}"
                 data-fish-thumb
                 data-index="{{ forloop.index0 }}"
               >
-                <img src="{{ image | image_url: width: 150 }}" alt="{{ image.alt | default: product.title }}" loading="lazy">
+                <img
+                  src="{{ image | image_url: width: 150 }}"
+                  alt="{{ image.alt | default: product.title }}"
+                  loading="lazy"
+                >
               </button>
+
             {% endfor %}
+
           </div>
+
         {% endif %}
+
       </div>
 
-      <!-- Info -->
+
+      <!-- Product Info -->
       <div class="fish-product__info">
 
         {% if section.settings.show_badge %}
+
           <span class="fish-product__badge">
-            <svg viewBox="0 0 24 24" fill="none"><path d="M20 12H4M10 6l-6 6 6 6"/></svg>
+
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M20 12H4M10 6l-6 6 6 6"/>
+            </svg>
+
             {{ section.settings.badge_text }}
+
           </span>
+
         {% endif %}
+
 
         {% if product.vendor != blank %}
-          <p class="fish-product__vendor">{{ product.vendor | upcase }}</p>
+
+          <p class="fish-product__vendor">
+            {{ product.vendor | upcase }}
+          </p>
+
         {% endif %}
 
-        <h1 class="fish-product__title">{{ product.title | upcase }}</h1>
 
+        <h1 class="fish-product__title">
+          {{ product.title | upcase }}
+        </h1>
+
+
+        <!-- Price -->
         <div class="fish-product__price-row">
-          <span class="fish-product__price">{{ current_variant.price | money }}</span>
+
+          <span class="fish-product__price">
+            {{ current_variant.price | money }}
+          </span>
+
           {% if current_variant.compare_at_price > current_variant.price %}
-            <span class="fish-product__price-compare">{{ current_variant.compare_at_price | money }}</span>
-          {% endif %}
-        </div>
 
-        <p class="fish-product__tax-note">
-          Tax included. <a href="/policies/shipping-policy" class="fish-product__shipping-link">Shipping</a> calculated at checkout.
-        </p>
-
-        {% if product.variants.size > 1 %}
-          {% for option in product.options_with_values %}
-            <div class="fish-product__option">
-              <label class="fish-product__option-label">{{ option.name }}</label>
-              <select class="fish-product__option-select" data-fish-option-index="{{ forloop.index0 }}">
-                {% for value in option.values %}
-                  <option value="{{ value }}" {% if option.selected_value == value %}selected{% endif %}>{{ value }}</option>
-                {% endfor %}
-              </select>
-            </div>
-          {% endfor %}
-        {% endif %}
-
-        <div class="fish-product__stock-row">
-          {% if current_variant.available %}
-            <span class="fish-product__stock fish-product__stock--in">
-              <span class="fish-product__stock-dot"></span> In stock
+            <span class="fish-product__price-compare">
+              {{ current_variant.compare_at_price | money }}
             </span>
-          {% else %}
-            <span class="fish-product__stock fish-product__stock--out">Out of stock</span>
+
           {% endif %}
-          {% if section.settings.show_returns %}
-            <span class="fish-product__returns">{{ section.settings.returns_text }}</span>
-          {% endif %}
+
         </div>
 
-        <form method="post" action="/cart/add" class="fish-product__form" data-fish-product-form>
-          <input type="hidden" name="id" value="{{ current_variant.id }}" data-fish-variant-id>
 
-          <div class="fish-product__buy-row">
-            <div class="fish-product__qty">
-              <button type="button" class="fish-product__qty-btn" data-fish-qty-minus aria-label="Decrease quantity">−</button>
-              <input type="number" name="quantity" value="1" min="1" class="fish-product__qty-input" data-fish-qty-input>
-              <button type="button" class="fish-product__qty-btn" data-fish-qty-plus aria-label="Increase quantity">+</button>
-            </div>
+        <!-- Product Description -->
+        {% if product.description != blank %}
 
-            <button type="submit" class="fish-product__add-btn" {% unless current_variant.available %}disabled{% endunless %}>
-              <svg viewBox="0 0 24 24" fill="none"><path d="M3 4h2l2.2 11h11.5L21 8H6"/><circle cx="9" cy="19" r="1.3"/><circle cx="18" cy="19" r="1.3"/></svg>
-              {% if current_variant.available %}Add to Cart{% else %}Sold Out{% endif %}
-            </button>
+          <div class="fish-product__description">
+            {{ product.description }}
           </div>
 
-          {% if section.settings.show_buy_now and current_variant.available %}
-            <button type="submit" name="checkout" class="fish-product__buy-now-btn">Buy It Now</button>
+        {% endif %}
+
+
+        <!-- Variant Options -->
+        {% if product.variants.size > 1 %}
+
+          {% for option in product.options_with_values %}
+
+            <div class="fish-product__option">
+
+              <label class="fish-product__option-label">
+                {{ option.name }}
+              </label>
+
+              <select
+                class="fish-product__option-select"
+                data-fish-option-index="{{ forloop.index0 }}"
+              >
+
+                {% for value in option.values %}
+
+                  <option
+                    value="{{ value }}"
+                    {% if option.selected_value == value %}
+                      selected
+                    {% endif %}
+                  >
+                    {{ value }}
+                  </option>
+
+                {% endfor %}
+
+              </select>
+
+            </div>
+
+          {% endfor %}
+
+        {% endif %}
+
+
+        <!-- Stock / Returns -->
+        <div class="fish-product__stock-row">
+
+          {% if current_variant.available %}
+
+            <span class="fish-product__stock fish-product__stock--in">
+
+              <span class="fish-product__stock-dot"></span>
+
+              In stock
+
+            </span>
+
+          {% else %}
+
+            <span class="fish-product__stock fish-product__stock--out">
+              Out of stock
+            </span>
+
           {% endif %}
+
+
+          {% if section.settings.show_returns %}
+
+            <span class="fish-product__returns">
+              {{ section.settings.returns_text }}
+            </span>
+
+          {% endif %}
+
+        </div>
+
+
+        <!-- Add to Cart -->
+        <form
+          method="post"
+          action="/cart/add"
+          class="fish-product__form"
+          data-fish-product-form
+        >
+
+          <input
+            type="hidden"
+            name="id"
+            value="{{ current_variant.id }}"
+            data-fish-variant-id
+          >
+
+
+          <div class="fish-product__buy-row">
+
+            <div class="fish-product__qty">
+
+              <button
+                type="button"
+                class="fish-product__qty-btn"
+                data-fish-qty-minus
+                aria-label="Decrease quantity"
+              >
+                −
+              </button>
+
+
+              <input
+                type="number"
+                name="quantity"
+                value="1"
+                min="1"
+                class="fish-product__qty-input"
+                data-fish-qty-input
+              >
+
+
+              <button
+                type="button"
+                class="fish-product__qty-btn"
+                data-fish-qty-plus
+                aria-label="Increase quantity"
+              >
+                +
+              </button>
+
+            </div>
+
+
+            <button
+              type="submit"
+              class="fish-product__add-btn"
+              {% unless current_variant.available %}
+                disabled
+              {% endunless %}
+            >
+
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M3 4h2l2.2 11h11.5L21 8H6"/>
+                <circle cx="9" cy="19" r="1.3"/>
+                <circle cx="18" cy="19" r="1.3"/>
+              </svg>
+
+              {% if current_variant.available %}
+                Add to Cart
+              {% else %}
+                Sold Out
+              {% endif %}
+
+            </button>
+
+          </div>
         </form>
-
-      
-
       </div>
     </div>
   </div>
 </section>
 
+
 <script src="{{ 'section-main-product.js' | asset_url }}" defer></script>
 
+
 {% schema %}
+
 {
   "name": "Main Product",
   "settings": [
@@ -168,13 +356,6 @@
       "type": "checkbox",
       "id": "show_returns",
       "label": "Show returns text",
-      "default": true
-    },
-  
-    {
-      "type": "checkbox",
-      "id": "show_buy_now",
-      "label": "Show Buy It Now button",
       "default": true
     },
     {
@@ -197,4 +378,5 @@
     }
   ]
 }
+
 {% endschema %}

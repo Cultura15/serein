@@ -207,17 +207,6 @@
   text-decoration: line-through;
 }
 
-.fish-product__tax-note {
-  font-size: 13px;
-  color: #888888;
-  margin: 0 0 24px;
-}
-
-.fish-product__shipping-link {
-  color: #444444;
-  text-decoration: underline;
-}
-
 .fish-product__option {
   margin-bottom: 18px;
 }
@@ -436,4 +425,67 @@
   .fish-product__add-btn {
     width: 100%;
   }
+}
+
+.fish-product__description {
+  margin: 0 0 28px;
+  color: #444444;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.fish-product__description p {
+  margin: 0 0 14px;
+}
+
+.fish-product__description p:last-child {
+  margin-bottom: 0;
+}
+
+.fish-product__description h2,
+.fish-product__description h3,
+.fish-product__description h4 {
+  color: #222222;
+  line-height: 1.35;
+  margin: 20px 0 10px;
+}
+
+.fish-product__description h2 {
+  font-size: 20px;
+}
+
+.fish-product__description h3 {
+  font-size: 18px;
+}
+
+.fish-product__description h4 {
+  font-size: 16px;
+}
+
+.fish-product__description ul,
+.fish-product__description ol {
+  margin: 0 0 16px;
+  padding-left: 22px;
+}
+
+.fish-product__description li {
+  margin-bottom: 6px;
+}
+
+.fish-product__description a {
+  color: #444444;
+  text-decoration: underline;
+}
+
+.fish-product__description strong,
+.fish-product__description b {
+  color: #222222;
+  font-weight: 700;
+}
+
+.fish-product__description img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 16px 0;
 }

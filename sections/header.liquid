@@ -15,13 +15,31 @@
 
       <!-- Icons -->
       <div class="header__icons">
-        <a href="{{ routes.search_url }}" class="header__icon header__icon--search link" aria-label="Search">
-          <svg viewBox="0 0 24 24" fill="none">
-            <circle cx="10.8" cy="10.8" r="6.8"/>
-            <path d="m16 16 5 5"/>
-          </svg>
-          <span class="header__icon-label">Search</span>
-        </a>
+        <div class="header__search-wrap" id="header-search-wrap" data-open="false">
+          <button type="button" class="header__icon header__icon--search link" id="header-search-toggle" aria-label="Search" aria-expanded="false">
+            <svg viewBox="0 0 24 24" fill="none">
+              <circle cx="10.8" cy="10.8" r="6.8"/>
+              <path d="m16 16 5 5"/>
+            </svg>
+            <span class="header__icon-label">Search</span>
+          </button>
+
+          <div class="header__search-inline" id="header-search-panel" role="search">
+            <input
+              type="text"
+              class="header__search-input"
+              id="header-search-input"
+              placeholder="Search…"
+              autocomplete="off"
+              aria-label="Search products"
+            >
+            <button type="button" class="header__search-close" id="header-search-close" aria-label="Close search">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18"/></svg>
+            </button>
+
+            <div class="header__search-results" id="header-search-results" hidden></div>
+          </div>
+        </div>
 
         <a href="{{ routes.cart_url }}" class="header__icon header__icon--cart link" id="cart-icon-bubble" aria-label="Cart" role="button" aria-haspopup="dialog">
           <svg viewBox="0 0 24 24" fill="none">
@@ -62,6 +80,8 @@
     </ul>
   </div>
 </header>
+
+<script src="{{ 'section-header.js' | asset_url }}" defer></script>
 
 {% schema %}
 {
