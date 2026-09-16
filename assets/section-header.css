@@ -1,0 +1,261 @@
+@import url("https://fonts.googleapis.com/css2?family=Charis+SIL:wght@400;700&display=swap");
+
+/* =========================================================
+   HEADER — fully transparent, overlays the hero directly.
+   No glass, no blur, no background — just white text/icons
+   sitting on top of whatever image is behind it.
+   ========================================================= */
+
+.header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 30;
+
+  font-family: "Charis SIL", serif;
+  color: #ffffff;
+  background: transparent;
+}
+
+.header a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.header__container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 32px 5% 20px;
+}
+
+/* ---------- Top row: logo + icons ---------- */
+
+.header__top-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.header__heading {
+  margin: 0;
+}
+
+.header__heading-name {
+  font-size: clamp(38px, 5vw, 56px);
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+/* ---------- Icons ---------- */
+
+.header__icons {
+  display: flex;
+  align-items: center;
+  gap: 26px;
+  padding-top: 10px; /* aligns roughly with the logo's optical center */
+}
+
+.header__icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.header__icon svg {
+  width: calc(20px * var(--icon-scale, 1));
+  height: calc(20px * var(--icon-scale, 1));
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.header__icon-label {
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.header__icon--cart .header__icon-label {
+  display: none; /* cart stays icon-only, matches the reference */
+}
+
+.header__icon-bubble {
+  position: absolute;
+  top: -8px;
+  right: -10px;
+  font-size: 11px;
+}
+
+/* ---------- Inline menu (below logo) ---------- */
+
+.header__inline-menu {
+  margin-top: 18px;
+}
+
+.list-menu--inline {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  margin: 0;
+  padding: 0;
+}
+
+.header__menu-item {
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ---------- Hamburger ---------- */
+
+.header__hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 24px;
+  height: 18px;
+  cursor: pointer;
+}
+
+.header__hamburger span {
+  display: block;
+  height: 2px;
+  width: 100%;
+  background: currentColor;
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
+}
+
+/* ---------- Mobile drawer ---------- */
+
+.header__mobile-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.95);
+  border-bottom: 1px solid rgba(37, 60, 53, 0.1);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+  color: #253c35;
+  z-index: 20;
+}
+
+.header__mobile-menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.header__mobile-menu li a {
+  display: block;
+  padding: 16px 20px;
+  border-top: 1px solid rgba(37, 60, 53, 0.08);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 13px;
+}
+
+#header-menu-toggle:checked ~ .header__mobile-menu {
+  display: block;
+}
+
+#header-menu-toggle:checked
+  ~ .header__container
+  .header__hamburger
+  span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+#header-menu-toggle:checked
+  ~ .header__container
+  .header__hamburger
+  span:nth-child(2) {
+  opacity: 0;
+}
+#header-menu-toggle:checked
+  ~ .header__container
+  .header__hamburger
+  span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (max-width: 768px) {
+  .header__container {
+    padding: 20px 20px 16px;
+  }
+
+  .header__heading-name {
+    font-size: 32px;
+  }
+
+  .header__inline-menu {
+    display: none; /* replaced by the mobile drawer */
+  }
+
+  .header__icons {
+    padding-top: 4px;
+    gap: 16px;
+  }
+
+  .header__icon-label {
+    display: none; /* icon-only on mobile, keeps it tight */
+  }
+
+  .header__hamburger {
+    display: flex;
+  }
+}
+
+/* ---------- Overlay variant (home page, sits over hero) ---------- */
+
+.header--overlay {
+  position: absolute;
+  background: transparent;
+}
+
+/* ---------- Solid variant (all other pages) ---------- */
+
+.header--solid {
+  position: relative;
+  background: rgba(0, 0, 0, 0.55);
+}
+
+.header--solid .header__container {
+  padding: 20px 5% 16px;
+}
+
+.header--solid .header__mobile-menu {
+  background: rgba(0, 0, 0, 0.85);
+  color: #ffffff;
+}
+
+.header--solid .header__mobile-menu li a {
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+@media (max-width: 768px) {
+  .header--solid .header__container {
+    padding: 14px 20px 12px;
+  }
+}

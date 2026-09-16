@@ -1,0 +1,94 @@
+{{ 'section-hero.css' | asset_url | stylesheet_tag }}
+
+<section class="hero-image" style="--mobile-min-height: {{ section.settings.mobile_min_height }};">
+  <div class="hero-image_inner">
+
+    <div class="hero-image_imagery">
+      {%- if section.settings.image != blank -%}
+        {{
+          section.settings.image
+          | image_url: width: 2000
+          | image_tag:
+            loading: 'eager',
+            fetchpriority: 'high',
+            sizes: '100vw',
+            widths: '750, 1100, 1500, 2000',
+            class: 'hero-image_img',
+            draggable: 'false'
+        }}
+      {%- else -%}
+        {{ 'hero-apparel-1' | placeholder_svg_tag: 'hero-image_img placeholder' }}
+      {%- endif -%}
+    </div>
+
+    <div class="hero-image_scrim"></div>
+
+    <div class="hero-image_text-content" style="--font-color: {{ section.settings.text_color }};">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="hero-image_heading">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+
+      {%- if section.settings.button_label != blank -%}
+        <div class="hero-image_btn-container">
+          <a href="{{ section.settings.button_link | default: '#' }}" class="btn btn--secondary">
+            {{ section.settings.button_label }}
+          </a>
+        </div>
+      {%- endif -%}
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero image",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "For Pets with Style"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Shop"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "select",
+      "id": "mobile_min_height",
+      "label": "Minimum height",
+      "options": [
+        { "value": "60vh", "label": "Small" },
+        { "value": "80vh", "label": "Medium" },
+        { "value": "100vh", "label": "Large" },
+        { "value": "100svh", "label": "Full screen" }
+      ],
+      "default": "100vh"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero image"
+    }
+  ]
+}
+{% endschema %}

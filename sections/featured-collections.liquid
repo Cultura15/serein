@@ -1,0 +1,195 @@
+{{ 'section-featured-collection.css' | asset_url | stylesheet_tag }}
+
+<section class="fish-collection">
+  <div class="fish-collection__container">
+
+    <!-- Promo Card -->
+    <div class="fish-collection__promo">
+      <a href="{{ section.settings.promo_link }}" class="fish-collection__promo-link">
+
+        {% if section.settings.promo_image != blank %}
+          <img
+            src="{{ section.settings.promo_image | image_url: width: 900 }}"
+            alt="{{ section.settings.promo_image.alt | default: 'Favorites' }}"
+            loading="lazy"
+            class="fish-collection__promo-image"
+            width="{{ section.settings.promo_image.width }}"
+            height="{{ section.settings.promo_image.height }}"
+          >
+        {% else %}
+          <div class="fish-collection__promo-image fish-collection__promo-image--placeholder">
+            {{ 'image' | placeholder_svg_tag: 'fish-collection__placeholder-svg' }}
+          </div>
+        {% endif %}
+
+        <span class="fish-collection__promo-overlay" aria-hidden="true"></span>
+
+        <div class="fish-collection__promo-content">
+
+          <div class="fish-collection__promo-copy">
+            <h2 class="fish-collection__promo-heading">Dive Into Every Setup</h2>
+            <p class="fish-collection__promo-description">
+              Find the perfect tank for you
+            </p>
+          </div>
+
+          <span class="fish-collection__promo-button">
+            {{ section.settings.promo_button_label | default: 'Shop Now' }}
+          </span>
+
+        </div>
+      </a>
+    </div>
+
+    <!-- Product Slider -->
+    <div class="fish-collection__slider-wrap">
+
+      {% if section.settings.heading != blank %}
+        <h2 class="fish-collection__heading">{{ section.settings.heading }}</h2>
+      {% endif %}
+
+      <div class="fish-collection__slider-outer">
+
+        <button
+          type="button"
+          class="fish-collection__nav fish-collection__nav--prev"
+          data-fish-slider-prev
+          aria-label="Previous"
+        >
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M15 6l-6 6 6 6"/>
+          </svg>
+        </button>
+
+        <div class="fish-collection__slider" data-fish-slider>
+          {% for block in section.blocks %}
+            {% assign product = block.settings.product %}
+
+            <div class="fish-collection__card" {{ block.shopify_attributes }}>
+              {% if product != blank %}
+
+                <a href="{{ product.url }}" class="fish-collection__card-link">
+
+                  <div class="fish-collection__card-image-wrap">
+                    {% if product.featured_image != blank %}
+                      <img
+                        src="{{ product.featured_image | image_url: width: 600 }}"
+                        alt="{{ product.featured_image.alt | default: product.title }}"
+                        loading="lazy"
+                        class="fish-collection__card-image"
+                        width="{{ product.featured_image.width }}"
+                        height="{{ product.featured_image.height }}"
+                      >
+                    {% else %}
+                      <div class="fish-collection__card-image fish-collection__card-image--placeholder">
+                        {{ 'image' | placeholder_svg_tag: 'fish-collection__placeholder-svg' }}
+                      </div>
+                    {% endif %}
+                  </div>
+
+                  <h3 class="fish-collection__card-title">
+                    {{ product.title }}
+                  </h3>
+
+                  <span class="fish-collection__card-price">
+                    {{ product.price | money }}
+                  </span>
+
+                </a>
+
+              {% else %}
+
+                <div class="fish-collection__card fish-collection__card--empty">
+                  <div class="fish-collection__card-image fish-collection__card-image--placeholder">
+                    {{ 'image' | placeholder_svg_tag: 'fish-collection__placeholder-svg' }}
+                  </div>
+
+                  <h3 class="fish-collection__card-title">
+                    Select a product
+                  </h3>
+                </div>
+
+              {% endif %}
+            </div>
+          {% endfor %}
+        </div>
+
+        <button
+          type="button"
+          class="fish-collection__nav fish-collection__nav--next"
+          data-fish-slider-next
+          aria-label="Next"
+        >
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M9 6l6 6-6 6"/>
+          </svg>
+        </button>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<script src="{{ 'section-featured-collection.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "Featured Collection",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Promo Card"
+    },
+    {
+      "type": "image_picker",
+      "id": "promo_image",
+      "label": "Promo image"
+    },
+    {
+      "type": "text",
+      "id": "promo_button_label",
+      "label": "Promo button label",
+      "default": "Shop Now"
+    },
+    {
+      "type": "url",
+      "id": "promo_link",
+      "label": "Promo link"
+    },
+    {
+      "type": "header",
+      "content": "Product Slider"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Featured Products"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured Collection",
+      "blocks": [
+        { "type": "product" },
+        { "type": "product" },
+        { "type": "product" }
+      ]
+    }
+  ]
+}
+{% endschema %}

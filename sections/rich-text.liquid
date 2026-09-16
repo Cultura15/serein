@@ -1,0 +1,62 @@
+{{ 'section-rich-text.css' | asset_url | stylesheet_tag }}
+
+<section class="fish-rich-text" style="
+  padding-top: {{ section.settings.padding_top }}px;
+  padding-bottom: {{ section.settings.padding_bottom }}px;
+">
+  <div class="fish-rich-text__container fish-rich-text__container--{{ section.settings.text_align }}">
+    {% if section.settings.heading != blank %}
+      <h2 class="fish-rich-text__heading">{{ section.settings.heading }}</h2>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Rich Text",
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Text",
+      "default": "<p>We aim to share the mentality of owning only beautiful and useful objects born from the unapologetic love for creativity and thirst for design. We believe that the items filling your life should do more than occupy space; they should inspire your daily rituals. By rejecting the mundane, we curate pieces that seamlessly blend intentional utility with striking artistry. </p>"
+    },
+    {
+      "type": "select",
+      "id": "text_align",
+      "label": "Text alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "unit": "px",
+      "default": 60
+    }
+  ],
+  "presets": [
+    {
+      "name": "Rich Text"
+    }
+  ]
+}
+{% endschema %}

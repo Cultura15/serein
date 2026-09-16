@@ -1,0 +1,51 @@
+/* ==========================================================================
+   Shared section tokens
+   --------------------------------------------------------------------------
+   Load this ONCE, globally, in layout/theme.liquid (see instructions).
+   Every custom section (hero, image-banner, rich-text, featured-collection,
+   featured-products) reads its type scale, spacing scale, and radius from
+   here. This is what keeps them scaling together at the same rate instead
+   of drifting apart at mismatched breakpoints when the viewport/zoom
+   changes.
+   ========================================================================== */
+
+@import url("https://fonts.googleapis.com/css2?family=Charis+SIL:wght@400;700&display=swap");
+
+:root {
+  --section-font-family: "Charis SIL", serif;
+
+  /* Fluid type scale.
+     Every value is a clamp(min, preferred-vw, max), so text resizes
+     continuously with the viewport instead of jumping only at hard
+     breakpoints. Keeping them in one place means every section's
+     headings grow at the same rate relative to each other. */
+  --text-heading-xl: clamp(28px, 5vw, 56px); /* hero */
+  --text-heading-lg: clamp(24px, 3.4vw, 40px); /* image banner */
+  --text-heading-md: clamp(
+    20px,
+    2.4vw,
+    32px
+  ); /* rich text, featured products */
+  --text-heading-sm: clamp(18px, 1.8vw, 26px); /* featured collection */
+  --text-body: clamp(14px, 1.1vw, 16px);
+
+  /* Fluid spacing scale for section padding. */
+  --space-section-block: clamp(40px, 6vw, 70px);
+  --space-section-inline: clamp(16px, 5vw, 64px);
+
+  /* Shared visual tokens. */
+  --section-radius: 6px;
+  --section-max-width: 1400px;
+}
+
+/* --------------------------------------------------------------------------
+   Shared breakpoints (for reference only — CSS custom properties cannot be
+   used inside @media conditions). Every section-*.css file below has been
+   aligned to these same two numbers so layouts change shape at the same
+   viewport width instead of at five different ones:
+
+     mobile breakpoint : max-width: 749px
+     tablet breakpoint : max-width: 989px  (i.e. min-width: 990px = desktop)
+
+   If you add a new section later, use these same two numbers.
+   -------------------------------------------------------------------------- */

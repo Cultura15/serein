@@ -1,0 +1,179 @@
+.fish-featured {
+  width: 100%;
+  background: linear-gradient(180deg, #f7f4ef 70%, #232531 100%);
+  font-family: var(--section-font-family, "Charis SIL", serif);
+  padding: var(--space-section-block, 70px) 40px;
+  box-sizing: border-box;
+}
+
+.fish-featured__heading {
+  font-size: var(--text-heading-md, clamp(20px, 2.4vw, 32px));
+  font-weight: 700;
+  color: #253c35;
+  text-align: center;
+  margin: 0 0 36px;
+}
+
+.fish-featured__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+  width: 100%;
+  max-width: 1500px;
+  margin: 0 auto;
+}
+
+.fish-featured__card {
+  display: block;
+  text-decoration: none;
+  border-radius: 18px;
+  overflow: hidden;
+}
+
+.fish-featured__image-wrap {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 4 / 5;
+  background: #1c1c1c;
+  border-radius: 18px;
+}
+
+.fish-featured__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.fish-featured__image--placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fish-featured__placeholder-svg {
+  width: 50%;
+  height: 50%;
+  opacity: 0.4;
+}
+
+.fish-featured__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.55) 0%,
+    rgba(0, 0, 0, 0) 50%
+  );
+  pointer-events: none;
+}
+
+.fish-featured__title {
+  position: absolute;
+  left: 28px;
+  right: 28px;
+  bottom: 28px;
+  margin: 0;
+  color: #ffffff;
+  font-size: clamp(20px, 2.2vw, 28px);
+  font-weight: 700;
+  line-height: 1.2;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+}
+
+.fish-featured__arrow {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 46px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  border-radius: 50%;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
+}
+
+.fish-featured__arrow svg {
+  width: 21px;
+  height: 21px;
+  stroke: #253c35;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.fish-featured__card:hover .fish-featured__image {
+  transform: scale(1.06);
+}
+
+.fish-featured__card:hover .fish-featured__arrow {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Tablet */
+@media (max-width: 989px) {
+  .fish-featured {
+    padding: 55px 24px;
+  }
+
+  .fish-featured__grid {
+    gap: 16px;
+  }
+
+  .fish-featured__image-wrap {
+    height: 460px;
+    border-radius: 16px;
+  }
+
+  .fish-featured__title {
+    font-size: 24px;
+    left: 22px;
+    right: 22px;
+    bottom: 22px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 599px) {
+  .fish-featured {
+    padding: 40px 16px;
+  }
+
+  .fish-featured__heading {
+    font-size: 26px;
+    margin-bottom: 22px;
+  }
+
+  .fish-featured__grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .fish-featured__image-wrap {
+    height: 420px;
+    min-height: 0;
+    border-radius: 16px;
+  }
+
+  .fish-featured__title {
+    font-size: 25px;
+    left: 20px;
+    right: 20px;
+    bottom: 22px;
+  }
+
+  .fish-featured__arrow {
+    top: 16px;
+    right: 16px;
+    width: 44px;
+    height: 44px;
+  }
+}

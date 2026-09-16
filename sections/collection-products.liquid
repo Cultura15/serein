@@ -1,0 +1,134 @@
+{{ 'collection-products.css' | asset_url | stylesheet_tag }}
+
+<section class="fish-collection-page">
+  <div class="fish-collection-page__container">
+
+    <!-- Sidebar Filters -->
+    <aside class="fish-collection-page__sidebar">
+      <form id="fish-filter-form" method="get">
+        {% for filter in collection.filters %}
+          <div class="fish-filter-group" data-fish-accordion>
+            <button type="button" class="fish-filter-group__toggle" data-fish-accordion-toggle>
+              {{ filter.label }}
+              <svg viewBox="0 0 24 24" fill="none" class="fish-filter-group__chevron">
+                <path d="M6 9l6 6 6-6"/>
+              </svg>
+            </button>
+
+            <div class="fish-filter-group__body">
+              {% for value in filter.values %}
+                <label class="fish-filter-option">
+                  <input
+                    type="checkbox"
+                    name="{{ value.param_name }}"
+                    value="{{ value.value }}"
+                    {% if value.active %}checked{% endif %}
+                    onchange="document.getElementById('fish-filter-form').submit()"
+                  >
+                  <span>{{ value.label }} <em>({{ value.count }})</em></span>
+                </label>
+              {% endfor %}
+            </div>
+          </div>
+        {% endfor %}
+      </form>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="fish-collection-page__main">
+
+      <div class="fish-collection-page__bar">
+        <span class="fish-collection-page__count">{{ collection.products_count }} products</span>
+
+        <div class="fish-sort" data-fish-accordion>
+          <button type="button" class="fish-sort__toggle" data-fish-accordion-toggle>
+            <svg viewBox="0 0 24 24" fill="none"><path d="M8 6v13M8 6l-3 3M8 6l3 3M16 18V5M16 18l3-3M16 18l-3-3"/></svg>
+            {{ collection.sort_by | default: 'Featured' | capitalize }}
+            <svg viewBox="0 0 24 24" fill="none" class="fish-sort__chevron"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+
+          <div class="fish-sort__body">
+            {% for option in collection.sort_options %}
+              <a href="?sort_by={{ option.value }}" class="fish-sort__option {% if collection.sort_by == option.value %}fish-sort__option--active{% endif %}">
+                {{ option.name }}
+              </a>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+      <div class="fish-collection-page__grid">
+        {% for product in collection.products %}
+          <div class="fish-product-card">
+            {% if product.compare_at_price > product.price %}
+              <span class="fish-product-card__badge">Up to {{ product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price }}% off</span>
+            {% endif %}
+
+            <a href="{{ product.url }}" class="fish-product-card__image-wrap">
+              {% if product.featured_image != blank %}
+                <img
+                  src="{{ product.featured_image | image_url: width: 500 }}"
+                  alt="{{ product.featured_image.alt | default: product.title }}"
+                  loading="lazy"
+                  class="fish-product-card__image"
+                  width="{{ product.featured_image.width }}"
+                  height="{{ product.featured_image.height }}"
+                >
+              {% else %}
+                <div class="fish-product-card__image fish-product-card__image--placeholder">
+                  {{ 'image' | placeholder_svg_tag: 'fish-product-card__placeholder-svg' }}
+                </div>
+              {% endif %}
+            </a>
+
+            <div class="fish-product-card__info">
+              {% if product.vendor != blank %}
+                <span class="fish-product-card__vendor">{{ product.vendor | upcase }}</span>
+              {% endif %}
+
+              <a href="{{ product.url }}" class="fish-product-card__title">{{ product.title }}</a>
+
+              {% if product.metafields.reviews.rating.value %}
+                <div class="fish-product-card__rating">
+                  {{ product.metafields.reviews.rating.value }}
+                </div>
+              {% endif %}
+
+              <div class="fish-product-card__price-row">
+                {% if product.compare_at_price > product.price %}
+                  <span class="fish-product-card__price-compare">{{ product.compare_at_price | money }}</span>
+                {% endif %}
+                <span class="fish-product-card__price">{{ product.price | money }}</span>
+              </div>
+
+              <button type="button" class="fish-product-card__cart-btn" data-fish-add-to-cart data-variant-id="{{ product.selected_or_first_available_variant.id }}">
+                <span class="fish-product-card__cart-label">+ Cart</span>
+              </button>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+
+      {% if paginate.pages > 1 %}
+        <nav class="fish-pagination">
+          {{ paginate | default_pagination }}
+        </nav>
+      {% endif %}
+
+    </div>
+  </div>
+</section>
+
+<script src="{{ 'collection-products.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "Collection Products",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Collection Products"
+    }
+  ]
+}
+{% endschema %}

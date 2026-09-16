@@ -1,0 +1,32 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {}
+    },
+    "featured-products": {
+      "type": "featured-products",
+      "settings": {}
+    },
+    "custom_rich_text": {
+      "type": "rich-text",
+      "settings": {}
+    },
+    "featured-collection": {
+      "type": "featured-collections",
+      "settings": {}
+    },
+    "image-banner": {
+      "type": "image-banner",
+      "settings": {}
+    }
+  },
+
+  "order": [
+    "hero",
+    "featured-products",
+    "custom_rich_text",
+    "featured-collection",
+    "image-banner"
+  ]
+}

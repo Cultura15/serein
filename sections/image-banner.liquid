@@ -1,0 +1,121 @@
+{{ 'section-image-banner.css' | asset_url | stylesheet_tag }}
+
+<section class="fish-banner">
+  <div class="fish-banner__card" style="--fish-banner-height: {{ section.settings.height }}px;">
+
+    {% if section.settings.image != blank %}
+      <img
+        src="{{ section.settings.image | image_url: width: 1600 }}"
+        alt="{{ section.settings.image.alt | default: section.settings.heading }}"
+        loading="lazy"
+        class="fish-banner__image"
+        width="{{ section.settings.image.width }}"
+        height="{{ section.settings.image.height }}"
+      >
+    {% else %}
+      <div class="fish-banner__image fish-banner__image--placeholder">
+        {{ 'image' | placeholder_svg_tag: 'fish-banner__placeholder-svg' }}
+      </div>
+    {% endif %}
+
+    <span class="fish-banner__overlay" aria-hidden="true"></span>
+
+    <div class="fish-banner__content">
+      {% if section.settings.overline != blank %}
+        <p class="fish-banner__overline">{{ section.settings.overline }}</p>
+      {% endif %}
+
+      {% if section.settings.heading != blank %}
+        <h2 class="fish-banner__heading">{{ section.settings.heading }}</h2>
+      {% endif %}
+
+      {% if section.settings.text != blank %}
+        <div class="fish-banner__text">{{ section.settings.text }}</div>
+      {% endif %}
+
+      {% if section.settings.button_label != blank or section.settings.button_label_2 != blank %}
+        <div class="fish-banner__buttons">
+          {% if section.settings.button_label != blank %}
+            <a href="{{ section.settings.button_link }}" class="fish-banner__btn fish-banner__btn--solid">
+              {{ section.settings.button_label }}
+            </a>
+          {% endif %}
+
+          {% if section.settings.button_label_2 != blank %}
+            <a href="{{ section.settings.button_link_2 }}" class="fish-banner__btn fish-banner__btn--outline">
+              {{ section.settings.button_label_2 }}
+            </a>
+          {% endif %}
+        </div>
+      {% endif %}
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Image Banner",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "overline",
+      "label": "Overline",
+      "default": "Just arrived"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "The new knits"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>A design collaboration between two creative brands, coming together for a completely unique collection.</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Shop collection"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "text",
+      "id": "button_label_2",
+      "label": "Second button label"
+    },
+    {
+      "type": "url",
+      "id": "button_link_2",
+      "label": "Second button link"
+    },
+    {
+      "type": "range",
+      "id": "height",
+      "label": "Banner height",
+      "min": 300,
+      "max": 700,
+      "step": 10,
+      "unit": "px",
+      "default": 550
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image Banner"
+    }
+  ]
+}
+{% endschema %}

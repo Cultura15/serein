@@ -1,0 +1,435 @@
+@import url("https://fonts.googleapis.com/css2?family=Charis+SIL:wght@400;700&display=swap");
+
+.fish-collection {
+  width: 100%;
+  background: #f7f4ef;
+  font-family: "Charis SIL", serif;
+  padding: 60px 5%;
+}
+
+.fish-collection__container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(280px, 32%) minmax(0, 1fr);
+  gap: 32px;
+}
+
+/* =========================
+   PROMO CARD
+========================= */
+
+.fish-collection__promo {
+  min-width: 0;
+}
+
+.fish-collection__promo-link {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 560px;
+  border-radius: 6px;
+  overflow: hidden;
+  text-decoration: none;
+  isolation: isolate;
+}
+
+.fish-collection__promo-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  z-index: -2;
+}
+
+.fish-collection__promo-image--placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f2f1e6;
+}
+
+.fish-collection__promo-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.45) 0%,
+    rgba(0, 0, 0, 0.05) 42%,
+    rgba(0, 0, 0, 0.15) 60%,
+    rgba(0, 0, 0, 0.6) 100%
+  );
+}
+
+/* Promo content fills the card */
+.fish-collection__promo-content {
+  position: absolute;
+  inset: 0;
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Upper-left text */
+.fish-collection__promo-copy {
+  align-self: flex-start;
+  max-width: 90%;
+}
+
+.fish-collection__promo-heading {
+  color: #ffffff;
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.15;
+  margin: 0 0 6px;
+}
+
+.fish-collection__promo-description {
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.4;
+  margin: 0;
+}
+
+/* Center / lower-center button */
+.fish-collection__promo-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 78%;
+  max-width: 300px;
+  min-height: 48px;
+
+  margin: auto auto 4px;
+
+  padding: 13px 28px;
+
+  background: #ffffff;
+  color: #222222;
+  border-radius: 3px;
+
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1;
+
+  text-align: center;
+  transition:
+    background 0.25s ease,
+    color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.fish-collection__promo-link:hover .fish-collection__promo-button {
+  background: #222222;
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+/* =========================
+   PRODUCT SLIDER
+========================= */
+
+.fish-collection__slider-wrap {
+  min-width: 0;
+}
+
+.fish-collection__heading {
+  font-size: 26px;
+  font-weight: 700;
+  color: #222222;
+  margin: 0 0 20px;
+  line-height: 1.25;
+}
+
+.fish-collection__slider-outer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.fish-collection__slider {
+  display: flex;
+  gap: 24px;
+  min-width: 0;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  flex: 1;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.fish-collection__slider::-webkit-scrollbar {
+  display: none;
+}
+
+.fish-collection__card {
+  flex: 0 0 calc((100% - 48px) / 3);
+  min-width: 0;
+  scroll-snap-align: start;
+}
+
+.fish-collection__card-link {
+  display: block;
+  text-decoration: none;
+  color: #222222;
+}
+
+.fish-collection__card-image-wrap {
+  overflow: hidden;
+  border-radius: 4px;
+  background: #f2f1e6;
+}
+
+.fish-collection__card-image {
+  width: 100%;
+  height: 340px;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.fish-collection__card-image--placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 340px;
+}
+
+.fish-collection__placeholder-svg {
+  width: 50%;
+  height: 50%;
+  opacity: 0.4;
+}
+
+.fish-collection__card-link:hover .fish-collection__card-image {
+  transform: scale(1.05);
+}
+
+.fish-collection__card-title {
+  margin: 14px 0 4px;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.fish-collection__card-price {
+  font-size: 15px;
+  color: #555;
+}
+
+/* =========================
+   NAVIGATION
+========================= */
+
+.fish-collection__nav {
+  flex: 0 0 auto;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid #d1d1d1;
+  background: #ffffff;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.fish-collection__nav:hover {
+  background: #f2f1e6;
+}
+
+.fish-collection__nav svg {
+  width: 18px;
+  height: 18px;
+  stroke: #222222;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.fish-collection__nav:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 989px) {
+  .fish-collection {
+    padding: 50px 4%;
+  }
+
+  .fish-collection__container {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .fish-collection__promo-link {
+    min-height: 420px;
+  }
+
+  .fish-collection__promo-content {
+    padding: 28px;
+  }
+
+  .fish-collection__promo-heading {
+    font-size: 28px;
+  }
+
+  .fish-collection__promo-button {
+    width: 70%;
+    max-width: 320px;
+  }
+
+  .fish-collection__card {
+    flex: 0 0 calc((100% - 24px) / 2);
+  }
+
+  .fish-collection__card-image,
+  .fish-collection__card-image--placeholder {
+    height: 280px;
+  }
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 599px) {
+  .fish-collection {
+    padding: 40px 20px;
+  }
+
+  .fish-collection__container {
+    gap: 32px;
+  }
+
+  /* Promo */
+  .fish-collection__promo-link {
+    min-height: 380px;
+    border-radius: 5px;
+  }
+
+  .fish-collection__promo-content {
+    padding: 22px;
+  }
+
+  .fish-collection__promo-heading {
+    font-size: 25px;
+  }
+
+  .fish-collection__promo-description {
+    font-size: 15px;
+  }
+
+  .fish-collection__promo-button {
+    width: 82%;
+    max-width: none;
+    min-height: 46px;
+    margin-bottom: 2px;
+    padding: 12px 20px;
+    font-size: 14px;
+  }
+
+  /* Slider heading */
+  .fish-collection__heading {
+    font-size: 23px;
+    margin-bottom: 16px;
+  }
+
+  /* Product slider */
+  .fish-collection__slider-outer {
+    gap: 8px;
+  }
+
+  .fish-collection__slider {
+    gap: 16px;
+  }
+
+  .fish-collection__card {
+    flex: 0 0 78%;
+  }
+
+  .fish-collection__card-image,
+  .fish-collection__card-image--placeholder {
+    height: 260px;
+  }
+
+  .fish-collection__card-title {
+    margin-top: 11px;
+    font-size: 15px;
+  }
+
+  .fish-collection__card-price {
+    font-size: 14px;
+  }
+
+  /* Smaller arrows on mobile */
+  .fish-collection__nav {
+    width: 36px;
+    height: 36px;
+  }
+
+  .fish-collection__nav svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+/* =========================
+   VERY SMALL PHONES
+========================= */
+
+@media (max-width: 380px) {
+  .fish-collection {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .fish-collection__promo-link {
+    min-height: 350px;
+  }
+
+  .fish-collection__promo-content {
+    padding: 20px;
+  }
+
+  .fish-collection__promo-heading {
+    font-size: 23px;
+  }
+
+  .fish-collection__promo-description {
+    font-size: 14px;
+  }
+
+  .fish-collection__promo-button {
+    width: 88%;
+  }
+
+  .fish-collection__card {
+    flex-basis: 82%;
+  }
+
+  .fish-collection__card-image,
+  .fish-collection__card-image--placeholder {
+    height: 240px;
+  }
+}
