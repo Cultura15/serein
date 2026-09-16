@@ -4,35 +4,39 @@
   <div class="fish-collection-page__container">
 
     <!-- Sidebar Filters -->
-    <aside class="fish-collection-page__sidebar">
-      <form id="fish-filter-form" method="get">
-        {% for filter in collection.filters %}
-          <div class="fish-filter-group" data-fish-accordion>
-            <button type="button" class="fish-filter-group__toggle" data-fish-accordion-toggle>
-              {{ filter.label }}
-              <svg viewBox="0 0 24 24" fill="none" class="fish-filter-group__chevron">
-                <path d="M6 9l6 6 6-6"/>
-              </svg>
-            </button>
+<aside class="fish-collection-page__sidebar">
+  <form id="fish-filter-form" method="get">
+    {% for filter in collection.filters %}
+      {% unless filter.type == 'price_range' %}
+        <div class="fish-filter-group" data-fish-accordion>
+          <button type="button" class="fish-filter-group__toggle" data-fish-accordion-toggle>
+            {{ filter.label }}
+            <svg viewBox="0 0 24 24" fill="none" class="fish-filter-group__chevron">
+              <path d="M6 9l6 6 6-6"/>
+            </svg>
+          </button>
 
-            <div class="fish-filter-group__body">
-              {% for value in filter.values %}
-                <label class="fish-filter-option">
-                  <input
-                    type="checkbox"
-                    name="{{ value.param_name }}"
-                    value="{{ value.value }}"
-                    {% if value.active %}checked{% endif %}
-                    onchange="document.getElementById('fish-filter-form').submit()"
-                  >
-                  <span>{{ value.label }} <em>({{ value.count }})</em></span>
-                </label>
-              {% endfor %}
-            </div>
+          <div class="fish-filter-group__body">
+            {% for value in filter.values %}
+              <label class="fish-filter-option">
+                <input
+                  type="checkbox"
+                  name="{{ value.param_name }}"
+                  value="{{ value.value }}"
+                  {% if value.active %}checked{% endif %}
+                  onchange="document.getElementById('fish-filter-form').submit()"
+                >
+                <span>{{ value.label }} <em>({{ value.count }})</em></span>
+              </label>
+            {% endfor %}
           </div>
-        {% endfor %}
-      </form>
-    </aside>
+        </div>
+      {% endunless %}
+    {% endfor %}
+  </form>
+</aside>
+
+
 
     <!-- Main Content -->
     <div class="fish-collection-page__main">

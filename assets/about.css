@@ -1,0 +1,95 @@
+@import url("https://fonts.googleapis.com/css2?family=Charis+SIL:wght@400;700&display=swap");
+
+.fish-about {
+  width: 100%;
+  background: #ffffff;
+  font-family: "Charis SIL", serif;
+  padding: 80px 5%;
+}
+
+.fish-about__container {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+
+.fish-about__image-wrap {
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.fish-about__image {
+  width: 100%;
+  height: 480px;
+  object-fit: cover;
+  display: block;
+}
+
+.fish-about__image--placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f2f1e6;
+}
+
+.fish-about__placeholder-svg {
+  width: 40%;
+  height: 40%;
+  opacity: 0.4;
+}
+
+.fish-about__overline {
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #888888;
+  margin: 0 0 12px;
+}
+
+.fish-about__heading {
+  font-size: 36px;
+  font-weight: 700;
+  color: #222222;
+  margin: 0 0 20px;
+  line-height: 1.2;
+}
+
+.fish-about__text {
+  font-size: 17px;
+  line-height: 1.7;
+  color: #444444;
+}
+
+.fish-about__text p {
+  margin: 0 0 16px;
+}
+
+.fish-about__text p:last-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 768px) {
+  .fish-about {
+    padding: 48px 20px;
+  }
+
+  .fish-about__container {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .fish-about__image {
+    height: 320px;
+  }
+
+  .fish-about__heading {
+    font-size: 28px;
+  }
+
+  .fish-about__text {
+    font-size: 16px;
+  }
+}

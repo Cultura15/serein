@@ -21,6 +21,7 @@
     <span class="fish-banner__overlay" aria-hidden="true"></span>
 
     <div class="fish-banner__content">
+
       {% if section.settings.overline != blank %}
         <p class="fish-banner__overline">{{ section.settings.overline }}</p>
       {% endif %}
@@ -33,21 +34,17 @@
         <div class="fish-banner__text">{{ section.settings.text }}</div>
       {% endif %}
 
-      {% if section.settings.button_label != blank or section.settings.button_label_2 != blank %}
+      {% if section.settings.button_label != blank %}
         <div class="fish-banner__buttons">
-          {% if section.settings.button_label != blank %}
-            <a href="{{ section.settings.button_link }}" class="fish-banner__btn fish-banner__btn--solid">
-              {{ section.settings.button_label }}
-            </a>
-          {% endif %}
-
-          {% if section.settings.button_label_2 != blank %}
-            <a href="{{ section.settings.button_link_2 }}" class="fish-banner__btn fish-banner__btn--outline">
-              {{ section.settings.button_label_2 }}
-            </a>
-          {% endif %}
+          <a
+            href="{{ routes.all_products_collection_url }}"
+            class="fish-banner__btn fish-banner__btn--solid"
+          >
+            {{ section.settings.button_label }}
+          </a>
         </div>
       {% endif %}
+
     </div>
 
   </div>
@@ -87,21 +84,6 @@
       "default": "Shop collection"
     },
     {
-      "type": "url",
-      "id": "button_link",
-      "label": "Button link"
-    },
-    {
-      "type": "text",
-      "id": "button_label_2",
-      "label": "Second button label"
-    },
-    {
-      "type": "url",
-      "id": "button_link_2",
-      "label": "Second button link"
-    },
-    {
       "type": "range",
       "id": "height",
       "label": "Banner height",
@@ -119,3 +101,4 @@
   ]
 }
 {% endschema %}
+
